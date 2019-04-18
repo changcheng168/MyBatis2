@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cc.dao.Dao">
+    <select id="fCById" parameterType="integer"
+            resultType="com.cc.po.Customer">
+            select * from customer where id = #{id}
+    </select>
+
+    <select id="fCByName" parameterType="String"
+            resultType="com.cc.po.Customer">
+            select * from customer where username like '%${value}%'
+    </select>
+
+    <insert id="addC" parameterType="com.cc.po.Customer">
+            insert into customer(username,jobs,phone)
+            values (#{username},#{jobs},#{phone})
+    </insert>
+
+    <update id="upC" parameterType="com.cc.po.Customer">
+        update  customer set
+        username=#{username},jobs =#{jobs},phone#{phone}
+        where id=#{id}
+    </update>
+
+</mapper>
