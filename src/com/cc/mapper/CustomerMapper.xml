@@ -1,28 +1,25 @@
+
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cc.dao.Dao">
-    <select id="fCById" parameterType="integer"
+<mapper namespace="com.cc.mapper.CustomerMapper">
+<cache/>
+    <select id="findById" parameterType="int"
             resultType="com.cc.po.Customer">
-            select * from customer where id = #{id}
+            select * from t_customer where id = #{id}
     </select>
-
-    <select id="fCByName" parameterType="String"
-            resultType="com.cc.po.Customer">
-            select * from customer where username like '%${value}%'
+    <select id="findAll" resultType="com.cc.po.Customer">
+            select * from t_customer
     </select>
-
-    <insert id="addC" parameterType="com.cc.po.Customer">
-            insert into customer(username,jobs,phone)
-            values (#{username},#{jobs},#{phone})
-    </insert>
-
-    <update id="upC" parameterType="com.cc.po.Customer">
-        update  customer set
-        username=#{username},jobs =#{jobs},phone#{phone}
-        where id=#{id}
-    </update>
-
+    <select id="findByLikeName" parameterType="string" resultType="com.cc.po.Customer">
+            select * from t_customer where username like concat('%',#{keyword} ,'%')
+    </select>
+    <select id="findALlByLikeName" resultType="com.cc.po.Customer">
+        select * from t_customer
+        <if test="keyword !=null and keyword != ''">
+              username like concat('%',#{keyword} ,'%')
+        </if>
+    </select>
 </mapper>

@@ -6,6 +6,16 @@ public class Customer {
     private String jobs;
     private String phone;
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", jobs='" + jobs + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }
@@ -38,13 +48,10 @@ public class Customer {
         this.phone = phone;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", jobs='" + jobs + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
+    public Customer(Integer id, String username, String jobs, String phone) {
+        this.id = id;
+        this.username = username;
+        this.jobs = jobs;
+        this.phone = phone;
     }
 }
