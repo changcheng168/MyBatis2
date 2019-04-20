@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -6,20 +5,31 @@
 
 <mapper namespace="com.cc.mapper.CustomerMapper">
 <cache/>
-    <select id="findById" parameterType="int"
-            resultType="com.cc.po.Customer">
-            select * from t_customer where id = #{id}
-    </select>
-    <select id="findAll" resultType="com.cc.po.Customer">
-            select * from t_customer
-    </select>
-    <select id="findByLikeName" parameterType="string" resultType="com.cc.po.Customer">
-            select * from t_customer where username like concat('%',#{keyword} ,'%')
-    </select>
-    <select id="findALlByLikeName" resultType="com.cc.po.Customer">
-        select * from t_customer
-        <if test="keyword !=null and keyword != ''">
-              username like concat('%',#{keyword} ,'%')
-        </if>
-    </select>
+    <!--批量增加-->
+    <insert id="insert" parameterType="java.util.List">
+            insert into t_customer (id,username,jobs,phone)
+            values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{jobs,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR})
+    </insert>
+    <!--批量更新-->
+    <update id="updateBatch" parameterType="java.util.List">
+        update t_customer
+        set NODE_ID=
+        <foreach collection="list" item="item" index="index"
+                 separator=" " open="case" close="end">
+            when id=#{item.goodsId} then #{item.nodeId}
+        </foreach>
+        where ID in
+        <foreach collection="list" index="index" item="item"
+                 separator="," open="(" close=")">
+            #{item.goodsId,jdbcType=BIGINT}
+        </foreach>
+    </update>
+    <!--批量删除-->
+    <delete id="deleteBatch" parameterType="java.lang.String">
+        delete from t_customer
+        where OUTPUT_ID IN
+        <foreach collection="array" item="outputId" open="(" separator="," close=")">
+            #{outputId}
+        </foreach>
+    </delete>
 </mapper>

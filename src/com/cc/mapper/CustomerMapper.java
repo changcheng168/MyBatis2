@@ -1,16 +1,16 @@
 package com.cc.mapper;
 
 import com.cc.po.Customer;
+import com.sun.xml.internal.ws.api.message.Attachment;
 
 import java.util.List;
 
 public interface CustomerMapper {
-    //根据ID查
-    Customer findById(int id);
-    //查全部
-    List<Customer> findAll();
-    //模糊查
-    List<Customer> findByLikeName(String keyword);
-    //用if元素来合二为一
-    List<Customer> findAllByLikeName(String keyword);
+    //批量插
+    public List<Customer> insert(String customer);
+        //批量改
+        public List<Customer> updateBatch(String customer);
+        //批量删
+    public List<Customer> deleteBatch(String customer);
+    }
 }
